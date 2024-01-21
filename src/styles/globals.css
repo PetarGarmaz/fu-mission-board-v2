@@ -17,17 +17,35 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+	@apply bg-gradient-to-r from-red-800 to-indigo-900 m-0 p-0;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+h1 {
+	@apply text-2xl font-bold;
+}
+
+h2 {
+	@apply text-xl font-bold;
+}
+
+h3 {
+	@apply text-lg font-bold;
+}
+
+h4 {
+	@apply font-bold;
+}
+
+ul {
+	list-style-position: inside;
+	list-style-type: circle;
+	margin: 0;
+	padding: 0;
+	line-height: 0;
+}
+
+li {
+	margin: 0;
+	padding: 0;
+	line-height: 2;
 }
