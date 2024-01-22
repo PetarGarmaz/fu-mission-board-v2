@@ -31,21 +31,6 @@ const EditBriefing = () => {
 		return data;
 	};
 
-	const getBriefingDetails = async () => {
-		const res = await fetch(`/api/briefing/${briefingId}`);
-		const data = await res.json();
-
-		setStartDate(new Date(parseInt(data.timestamp)));
-		setBriefing({
-			title: data.title,
-			host: data.host,
-			timestamp: data.timestamp,
-			desc: data.desc,
-			image: data.image,
-			status: data.status,
-		});
-	}
-
 	const getTimestamp = () => {
 		startDate.setHours(20, 0, 0);
 		return Date.parse(startDate);
@@ -81,6 +66,21 @@ const EditBriefing = () => {
 
 	useEffect(() => {
 		fetchBriefings();
+
+		const getBriefingDetails = async () => {
+			const res = await fetch(`/api/briefing/${briefingId}`);
+			const data = await res.json();
+
+			setStartDate(new Date(parseInt(data.timestamp)));
+			setBriefing({
+				title: data.title,
+				host: data.host,
+				timestamp: data.timestamp,
+				desc: data.desc,
+				image: data.image,
+				status: data.status,
+			});
+		}
 
 		if(briefingId) {
 			getBriefingDetails();
