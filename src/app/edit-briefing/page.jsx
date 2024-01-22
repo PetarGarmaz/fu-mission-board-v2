@@ -1,6 +1,5 @@
 "use client"
 
-import React, { Suspense } from 'react'
 import {useState, useEffect} from 'react'
 import {useSession} from "next-auth/react";
 import {useRouter, useSearchParams} from "next/navigation";
@@ -8,10 +7,11 @@ import Form from '@components/Form'
 
 const EditBriefing = () => {
 	const searchParams = useSearchParams();
+	const briefingId = searchParams.get("id");
 	const router = useRouter();
 	const {data: session, status} = useSession();
 	const [startDate, setStartDate] = useState(new Date());
-	const [allBriefings, setAllBriefings] = useState([]);
+	const [allBriefings, setAllBriefings] = useState(null);
 	const [briefing, setBriefing] = useState ({
 		title: "",
 		host: "",
@@ -20,21 +20,6 @@ const EditBriefing = () => {
 		image: "",
 		status: "",
 	});
-
-	const getBriefingDetails = async () => {
-		const res = await fetch(`/api/briefing/${searchParams.get("id")}`);
-		const data = await res.json();
-
-		setStartDate(new Date(parseInt(data.timestamp)));
-		setBriefing({
-			title: data.title,
-			host: data.host,
-			timestamp: data.timestamp,
-			desc: data.desc,
-			image: data.image,
-			status: data.status,
-		});
-	}
 
 	const fetchBriefings = async () => {
 		const res = await fetch("/api/briefing");
@@ -53,11 +38,11 @@ const EditBriefing = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		if (!searchParams.get("id")) return alert("Missing briefing id!");
+		if (!briefingId) return alert("Missing briefing id!");
 
 		try {
 			const timestamp = getTimestamp();
-			const res = await fetch(`/api/briefing/${searchParams.get("id")}`, {
+			const res = await fetch(`/api/briefing/${briefingId}`, {
 				method: "PATCH", 
 				body: JSON.stringify({
 					creator: session?.user.id,
@@ -79,16 +64,29 @@ const EditBriefing = () => {
 	}
 
 	useEffect(() => {
-		if(searchParams.get("id")) {
+		const getBriefingDetails = async () => {
+			const res = await fetch(`/api/briefing/${briefingId}`);
+			const data = await res.json();
+
+			setStartDate(new Date(parseInt(data.timestamp)));
+			setBriefing({
+				title: data.title,
+				host: data.host,
+				timestamp: data.timestamp,
+				desc: data.desc,
+				image: data.image,
+				status: data.status,
+			});
+		}
+
+		if(briefingId) {
 			fetchBriefings();
 			getBriefingDetails();
 		}
-	}, [searchParams.get("id")]);
+	}, [briefingId]);
 
 	return (
-		<Suspense>
-			<Form type="Edit" briefing={briefing} setBriefing={setBriefing} handleSubmit={handleSubmit} startDate={startDate} setStartDate={setStartDate} allBriefings={allBriefings}/>	
-		</Suspense>
+		<Form type="Edit" briefing={briefing} setBriefing={setBriefing} handleSubmit={handleSubmit} startDate={startDate} setStartDate={setStartDate} allBriefings={allBriefings}/>	
 	)
 }
 
