@@ -20,7 +20,7 @@ const Briefing = ({briefing}) => {
 	};
 
 	const handleEdit = () => {
-		router.push(`/edit-briefing?id=${briefing._id}`);
+		router.push(`/edit-briefing/${briefing._id}`);
 	};
 
 	const handleDelete = async () => {

@@ -2,12 +2,10 @@
 
 import {useState, useEffect} from 'react'
 import {useSession} from "next-auth/react";
-import {useRouter, useSearchParams} from "next/navigation";
+import {useRouter} from "next/navigation";
 import Form from '@components/Form'
 
-const EditBriefing = () => {
-	const searchParams = useSearchParams();
-	const briefingId = searchParams.get("id");
+const EditBriefing = ({params}) => {
 	const router = useRouter();
 	const {data: session, status} = useSession();
 	const [startDate, setStartDate] = useState(new Date());
@@ -38,11 +36,11 @@ const EditBriefing = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		if (!briefingId) return alert("Missing briefing id!");
+		if (!params?.id) return alert("Missing briefing id!");
 
 		try {
 			const timestamp = getTimestamp();
-			const res = await fetch(`/api/briefing/${briefingId}`, {
+			const res = await fetch(`/api/briefing/${params?.id}`, {
 				method: "PATCH", 
 				body: JSON.stringify({
 					creator: session?.user.id,
@@ -65,7 +63,7 @@ const EditBriefing = () => {
 
 	useEffect(() => {
 		const getBriefingDetails = async () => {
-			const res = await fetch(`/api/briefing/${briefingId}`);
+			const res = await fetch(`/api/briefing/${params?.id}`);
 			const data = await res.json();
 
 			setStartDate(new Date(parseInt(data.timestamp)));
@@ -79,11 +77,11 @@ const EditBriefing = () => {
 			});
 		}
 
-		if(briefingId) {
+		if(params?.id) {
 			fetchBriefings();
 			getBriefingDetails();
 		}
-	}, [briefingId]);
+	}, [params?.id]);
 
 	return (
 		<Form type="Edit" briefing={briefing} setBriefing={setBriefing} handleSubmit={handleSubmit} startDate={startDate} setStartDate={setStartDate} allBriefings={allBriefings}/>	
