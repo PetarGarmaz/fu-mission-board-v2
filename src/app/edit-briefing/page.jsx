@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { Suspense } from 'react'
 import {useState, useEffect} from 'react'
 import {useSession} from "next-auth/react";
 import {useRouter, useSearchParams} from "next/navigation";
@@ -88,7 +88,9 @@ const EditBriefing = () => {
 	}, [briefingId]);
 
 	return (
-		<Form type="Edit" briefing={briefing} setBriefing={setBriefing} handleSubmit={handleSubmit} startDate={startDate} setStartDate={setStartDate} allBriefings={allBriefings}/>
+		<Suspense>
+			<Form type="Edit" briefing={briefing} setBriefing={setBriefing} handleSubmit={handleSubmit} startDate={startDate} setStartDate={setStartDate} allBriefings={allBriefings}/>	
+		</Suspense>
 	)
 }
 
