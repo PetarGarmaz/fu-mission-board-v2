@@ -47,11 +47,11 @@ const Briefing = ({briefing}) => {
 
 	return (
 		<section className='flex'>
-			<div className="flex flex-col w-9/12 mx-auto bg-gray-900 my-16 border border-gray-600 rounded-lg">
+			<div className="flex flex-col w-9/12 mx-auto max-lg:w-11/12 bg-gray-900 my-16 border border-gray-600 rounded-lg">
 				<img src={briefing.creator.image} alt="Logo" onClick={() => handleProfileClick()} className='object-contain max-w-16 mx-auto my-2 rounded-full cursor-pointer' />
 				
 				<hr className='border-gray-600'/>
-				<h1 className='text-5xl text-gray-200 font-bold tracking-widest text-center my-4 max-lg:text-3xl max-lg:tracking-normal'>{briefing.title}</h1>
+				<h1 className='text-5xl text-gray-200 font-bold tracking-widest text-center my-4 max-lg:mx-2 max-lg:text-3xl max-lg:tracking-normal'>{briefing.title}</h1>
 				
 				<hr className='border-gray-600'/>
 				<p className='text-gray-200 text-center max-lg:text-sm tracking-wider italic my-4 mx-4'>Host: {briefing.host} ● {getDateString(briefing.timestamp)} ● {getTimeString(briefing.timestamp)}</p>

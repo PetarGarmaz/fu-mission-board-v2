@@ -7,7 +7,7 @@ import SortBar from '@components/SortBar'
 const Profile = ({name, allBriefings, query, setQuery, sort, setSort, order, setOrder, future, setFuture}) => {
 	return (
 		<div className='flex'>
-			<div className="flex flex-col w-9/12 mx-auto">
+			<div className="flex flex-col w-9/12 mx-auto max-lg:w-11/12">
 				<header className="flex flex-col bg-gray-900 my-16 border border-gray-600 rounded-lg">
 					<h1 className='text-5xl text-gray-200 font-bold tracking-widest text-center my-4 max-lg:text-3xl max-lg:tracking-normal'>{name.toUpperCase()}'S PROFILE</h1>
 					<hr className='border-gray-600'/>

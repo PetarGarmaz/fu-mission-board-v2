@@ -74,10 +74,8 @@ const MyProfile = ({ params }) => {
 	};
 
 	useEffect(() => {
-		if (session?.user.id) {
-			fetchBriefings();
-		};
-	}, [query, sort, order, future, session?.user.id]);
+		fetchBriefings();
+	}, [query, sort, order, future]);
 
 	return (
 		<Profile name={userName} allBriefings={allBriefings} query={query} setQuery={setQuery} sort={sort} setSort={setSort} order={order} setOrder={setOrder} future={future} setFuture={setFuture}/>
