@@ -22,4 +22,5 @@ const BriefingPage = ({params}) => {
 	)
 }
 
+
 export default BriefingPage
