@@ -18,11 +18,7 @@ const BriefingPage = ({params}) => {
 	}, []);
 
 	return (
-		<div>
-			{briefing && (
-				<Briefing briefing={briefing}/>
-			)
-		</div>
+		<Briefing briefing={briefing}/>
 	)
 }
 
